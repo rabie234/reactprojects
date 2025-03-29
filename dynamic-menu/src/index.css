@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  /* Color Variables */
+  --primary-color: #a17860;
+  --secondary-color: #231f1e;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --text-mute: #666666;
+  --border-color: #a17860;
+
+  /* Font Variables */
+  --font-family-primary: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-secondary: "Poppins", sans-serif;
+
+  /* Other Variables */
+  --line-height: 1.5;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* Apply Variables */
+  font-family: var(--font-family-primary);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-normal);
+
+  color-scheme: light dark;
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  /* Color Variables */
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-background: var(--background-color);
+  --color-text: var(--text-color);
+  --color-text-mute: var(--text-mute);
+  --color-border: var(--border-color);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+/* Example Usage */
+h1 {
+  color: var(--primary-color);
+  font-family: var(--font-family-primary);
+}
+
+.remove-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
