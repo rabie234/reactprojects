@@ -4,74 +4,32 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
 
-  function getData() {
-    setProducts(DataTransfer.data.product);
+ // Fetch Data from API
+ useEffect(() => {
+
+  async function fetchData() {
+    try {
+      const response = await fetch("https://api.softpro.me/CustomersAPIs/1936173471/");
+      const data = await response.json();
+      console.log(data)
+
+      setCategories(data.categories);
+      setProducts(data.items);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
-  useEffect(() => {
-    getData();
-  }, []);
-  const categories = [
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Fashion" },
-    { id: 3, name: "Home & Kitchen" },
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Fashion" },
-    { id: 3, name: "Home & Kitchen" },
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Fashion" },
-    { id: 3, name: "Home & Kitchen" },
-  ];
 
-  const products = [
-    {
-      id: 1,
-      name: "Smartphone",
-      price: "$499",
-      image: "https://via.placeholder.com/100",
-      categoryId: 1,
-    },
-    {
-      id: 2,
-      name: "Laptop",
-      price: "$899",
-      image: "https://via.placeholder.com/100",
-      categoryId: 1,
-    },
-    {
-      id: 1,
-      name: "Smartphone",
-      price: "$499",
-      image: "https://via.placeholder.com/100",
-      categoryId: 1,
-    },
-    {
-      id: 2,
-      name: "Laptop",
-      price: "$899",
-      image: "https://via.placeholder.com/100",
-      categoryId: 1,
-    },
-    {
-      id: 3,
-      name: "T-shirt",
-      price: "$25",
-      image: "https://via.placeholder.com/100",
-      categoryId: 2,
-    },
-    {
-      id: 4,
-      name: "Blender",
-      price: "$50",
-      image: "https://via.placeholder.com/100",
-      categoryId: 3,
-    },
-  ];
+  fetchData();
+}, []);
 
-  const filteredProducts = selectedCategory
-    ? products.filter((product) => product.categoryId === selectedCategory)
-    : products;
+  
+const filteredProducts = selectedCategory
+? products.filter((product) => String(product.idSubC) === String(selectedCategory))
+: products;
+
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-background relative">
@@ -97,9 +55,16 @@ function App() {
               <h1 className="text-3xl max-md:text-xl font-bold text-primary">
                 Albaba
               </h1>
-              <p className="text-mute max-md:text-sm text-lg">
+              
+              <p className="text-slate-600 text-sm font-bold">
                 The best online store
               </p>
+              <p className="text-sm mt-1">
+              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="inline-flex text-[#A17860] my-auto mx-1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
+                <strong class="  text-[#A17860]">Open Time: </strong>
+                <span>(8 am - 3 pm)</span>
+                <span> (7 pm - 12 am)</span>
+                </p>
             </div>
           </div>
         </section>
@@ -110,15 +75,15 @@ function App() {
           <div className="w-full overflow-x-auto whitespace-nowrap flex gap-4 pb-3 border-border border-b remove-scroll-bar">
             {categories.map((category) => (
               <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                key={category.idsubc}
+                onClick={() => setSelectedCategory(category.idsubc)}
                 className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                  selectedCategory === category.id
+                  selectedCategory === category.idsubc
                     ? "bg-primary text-white"
                     : " bg-background text-primary"
                 }`}
               >
-                {category.name}
+                {category.description}
               </button>
             ))}
           </div>
@@ -134,10 +99,10 @@ function App() {
                   <img
                     className="w-20 h-20 object-cover rounded-md"
                     src={product.image}
-                    alt={product.name}
+                    alt={product.description}
                   />
-                  <h3 className="text-sm font-semibold mt-2">{product.name}</h3>
-                  <p className="text-xs text-gray-500">{product.price}</p>
+                  <h3 className="text-sm font-semibold mt-2">{product.description}</h3>
+                  <p className="text-xs text-gray-500">{product.price1} {product.currency}</p>
                 </div>
               ))
             ) : (
