@@ -2,12 +2,12 @@
 
 :root {
   /* Color Variables */
-  --primary-color: #a17860;
-  --secondary-color: #231f1e;
+  --primary-color: #d6b019;
+  --secondary-color: #ffffff;
   --background-color: #ffffff;
-  --text-color: #333333;
+  --text-color: #231f20;
   --text-mute: #666666;
-  --border-color: #a17860;
+  --border-color: #231f20;
 
   /* Font Variables */
   --font-family-primary: system-ui, Avenir, Helvetica, Arial, sans-serif;
