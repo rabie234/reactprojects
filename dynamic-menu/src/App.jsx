@@ -8,19 +8,22 @@ import {
   FaInstagram,
   FaMapMarkerAlt,
   FaPhone,
+  FaSpinner,
 } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
+import { FaLocationDot, FaX } from "react-icons/fa6";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showContactTab, setShowContactTab] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Fetch Data from API
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
         const response = await fetch(
           "https://api.softpro.me/CustomersAPIs/1936173471/index.php"
         );
@@ -28,7 +31,9 @@ function App() {
         setCategories(data.categories);
         setSelectedCategory(data.categories[0]?.idsubc); // Safely access first category
         setProducts(data.items);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching data:", error);
       }
     }
@@ -41,6 +46,13 @@ function App() {
         (product) => String(product.idSubC) === String(selectedCategory)
       )
     : products;
+
+  if (loading)
+    return (
+      <div className=" w-screen h-screen flex justify-center">
+        <FaSpinner className=" animate-spin text-primary my-auto text-3xl" />
+      </div>
+    );
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-background relative">
@@ -66,8 +78,8 @@ function App() {
               <h1 className="text-3xl max-md:text-xl font-bold text-primary">
                 Gega Bite
               </h1>
-              <p className="text-slate-600 text-sm font-bold">
-                Welcome in our restaurant
+              <p className="text-slate-600 block text-sm font-bold">
+                <FaLocationDot className=" inline-block" /> Menieh , High way
               </p>
               <p className="text-sm mt-1">
                 <svg
@@ -104,7 +116,11 @@ function App() {
               <FaPhone className="text-primary" />
               <strong>Phone:</strong>
               <a href="tel:+961123456" className="text-blue-600 underline">
-                +961 123 456
+                +961 464 112
+              </a>
+              -
+              <a href="tel:+96179166996" className="text-blue-600 underline">
+                +961 79 166 996
               </a>
             </p>
 
@@ -217,7 +233,11 @@ function App() {
                   >
                     <img
                       className="w-20 h-20 object-cover rounded-md"
-                      src={product.image}
+                      src={
+                        product.pic
+                          ? `https://api.softpro.me/CustomersAPIs/1936173471/images/${product.pic}`
+                          : "https://png.pngtree.com/png-vector/20221109/ourmid/pngtree-no-image-available-icon-flatvector-illustration-graphic-available-coming-vector-png-image_40958834.jpg"
+                      }
                       alt={product.description}
                     />
                     <h3 className="text-sm font-semibold mt-2">
